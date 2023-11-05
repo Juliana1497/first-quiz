@@ -26,6 +26,8 @@
 # formulas and their outputs in the test file, `question3_test.py`.
 
 # This function should return an oven instance!
+
+#Magical Oven
 class Oven:
   def __init__(self):
     self.ingredients = []
@@ -53,6 +55,7 @@ class Oven:
       return "snow"
 
 def make_oven():
+  #new instance
   return Oven()
 
 def alchemy_combine(oven, ingredients, temperature):

@@ -17,8 +17,9 @@
 
 
 def swap_tuple(lis):
-  x,y = lis
-  return y,x
+  #swap tuple lis
+  a,b = lis
+  return b,a
   
 swapper = swap_tuple
 

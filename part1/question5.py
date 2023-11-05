@@ -47,6 +47,8 @@ add column favorite_food_id integer;
 
 sql_select_all_vegetarian_pets = """
 
-SELECT animals.name, favorite_foods.name FROM animals JOIN favorite_foods ON animals.favorite_food_id = favorite_foods.food_id WHERE animals.favorite_food_id IN(SELECT favorite_foods.food_id FROM favorite_foods WHERE favorite_foods.vegetarian = 1);
+SELECT a.name, ff.name FROM animals AS a 
+    JOIN favorite_foods AS ff ON a.favorite_food_id = ff.food_id 
+    WHERE a.favorite_food_id IN(SELECT favorite_foods.food_id FROM favorite_foods WHERE favorite_foods.vegetarian = 1);
 
 """

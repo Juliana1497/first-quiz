@@ -24,7 +24,9 @@ import pets_db
 
 sql_pets_owned_by_nobody = """
 
-SELECT animals.name, animals.species, animals.age FROM animals WHERE animals.animal_id NOT IN(SELECT people_animals.pet_id FROM people_animals);
+SELECT a.name, a.species, a.age 
+    FROM animals AS a 
+    WHERE a.animal_id NOT IN(SELECT people_animals.pet_id FROM people_animals);
 
 """
 
@@ -34,7 +36,11 @@ SELECT animals.name, animals.species, animals.age FROM animals WHERE animals.ani
 
 sql_pets_older_than_owner = """
 
-SELECT count(animal_id) FROM animals JOIN people_animals on animals.animal_id = people_animals.pet_id join people on people_animals.owner_id= people.person_id WHERE animals.age> people.age;
+SELECT count(a.animal_id) 
+    FROM animals AS a 
+        JOIN people_animals AS pa ON a.animal_id = pa.pet_id 
+        JOIN people AS p ON pa.owner_id= p.person_id 
+        WHERE a.age> p.age;
 
 """
 
@@ -43,6 +49,10 @@ SELECT count(animal_id) FROM animals JOIN people_animals on animals.animal_id = 
 # The output should be a list of tuples in the format: (<person name>, <pet name>, <species>)
 sql_only_owned_by_bessie = """ 
 
-SELECT people.name, animals.name, animals.species FROM animals JOIN people_animals on animals.animal_id = people_animals.pet_id join people on people_animals.owner_id= people.person_id WHERE people_animals.owner_id IN(SELECT people.person_id FROM people where people.name = "bessie");
+SELECT p.name, a.name, a.species 
+    FROM animals AS a 
+        JOIN people_animals AS pa ON a.animal_id = pa.pet_id 
+        JOIN people AS p ON pa.owner_id= p.person_id 
+        WHERE pa.owner_id IN(SELECT people.person_id FROM people WHERE people.name = "bessie");
 
 """
