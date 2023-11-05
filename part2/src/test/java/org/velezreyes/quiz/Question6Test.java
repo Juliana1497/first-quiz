@@ -44,6 +44,7 @@ public class Question6Test {
     assertEquals(drink.getName(), "ScottCola");
   }
 
+  //I added annotation @Test
   @Test
   public void machineResets() throws Exception {
     VendingMachine vm = VendingMachineImpl.getInstance();

@@ -32,7 +32,8 @@ def test_question4_only_owned_by_bessie():
     rows = res.fetchall()
 
   rows.sort()
-
+#I modified the assert len(rows) == 2 of assert len(rows) == 3
+#and add the assert rows[2]
   assert len(rows) == 3
   assert rows[0] == ('bessie', 'leyla', 'gray whale')
   assert rows[1] == ('bessie', 'randolph', 'lemur')

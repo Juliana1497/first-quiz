@@ -1,36 +1,53 @@
 package org.velezreyes.quiz.question6;
 
-public class VendingMachineImpl{
+import java.util.HashMap;
+import java.util.Map;
 
-  public static VendingMachine getInstance() {
-      
-      VendingMachine vm = new VendingMachine() {
-          @Override
-          public void insertQuarter() {
-          }
+public class VendingMachineImpl implements VendingMachine {
+    private int coins;
+    private final Map<String, Integer> drinks;
+    
+    //constructor
+    public VendingMachineImpl() {
+        this.coins = 0;
+        this.drinks = new HashMap<>();
+        // Initialize the available drinks and their prices in the Vending Machine
+        drinks.put("ScottCola", 75);
+        drinks.put("KarenTea", 100);
+    }
 
-          @Override
-          public Drink pressButton(String name) throws NotEnoughMoneyException, UnknownDrinkException {
-              Drink d = new Drink() {
-                  @Override
-                  public String getName() {
-                      String name = "ScottCola";
-                      return name;
-                  }
+    @Override
+    public void insertQuarter() {
+        //each quarter of coins is = 25
+        coins += 25;
+    }
 
-                  @Override
-                  public boolean isFizzy() {
-                      boolean ban = true;
-                      return ban;
-                  }
-              };
-              if (name.equals("BessieBooze")) {
-                  throw new UnknownDrinkException();
-              }
-              return d;
-          };
-      };
-      
-    return vm;
-  }
+    @Override
+    public Drink pressButton(String name) throws NotEnoughMoneyException, UnknownDrinkException {
+        //the name of drink converted in a Integer calls price
+        Integer price = drinks.get(name);
+        if (price == null) {
+            throw new UnknownDrinkException();
+        }
+        if (coins < price) {
+            throw new NotEnoughMoneyException();
+        }
+        coins -= price;
+        Drink d = new Drink() {
+            @Override
+            public String getName() {
+                return name;
+            }
+
+            @Override
+            public boolean isFizzy() {
+                return name.equals("ScottCola"); 
+            }
+        };
+        return d;
+    }
+
+    public static VendingMachine getInstance() {
+        return new VendingMachineImpl();
+    }
 }
